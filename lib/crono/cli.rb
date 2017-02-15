@@ -14,20 +14,29 @@ module Crono
     attr_accessor :config
 
     def initialize
+      STDOUT.puts '3'
       self.config = Config.new
       Crono.scheduler = Scheduler.new
+      STDOUT.puts '4'
     end
 
     def run
+      STDOUT.puts '5'
       parse_options(ARGV)
       parse_command(ARGV)
+      STDOUT.puts '6'
 
-      setup_log 
+      setup_log
+      STDOUT.puts '7'
 
       write_pid unless config.daemonize
+      STDOUT.puts '8'
       load_rails
+      STDOUT.puts '9'
       Cronotab.process(File.expand_path(config.cronotab))
+      STDOUT.puts '10'
       print_banner
+      STDOUT.puts '11'
 
       unless have_jobs?
         logger.error "You have no jobs in you cronotab file #{config.cronotab}"
@@ -37,7 +46,9 @@ module Crono
       if config.daemonize
         start_working_loop_in_daemon
       else
+        STDOUT.puts '12'
         start_working_loop
+        STDOUT.puts '13'
       end
     end
 
